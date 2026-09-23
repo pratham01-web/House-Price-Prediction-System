@@ -14,6 +14,8 @@ import {
 import { formatCurrency, formatNumber } from "../lib/utils";
 import { MarketSummary, ModelVersion } from "../types/api";
 
+import { Beams } from "./effects/Beams";
+
 interface OverviewTabProps {
   summary: MarketSummary | null;
   activeModel: ModelVersion | null;
@@ -29,6 +31,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
     <div className="space-y-8 animate-fadeIn">
       {/* Hero Banner with Provenance Callout */}
       <div className="glass-panel rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-glass border border-indigo-500/20">
+        <Beams beamNumber={8} speed={0.25} noiseIntensity={0.2} beamHeight={200} />
         <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 max-w-3xl space-y-4">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono">

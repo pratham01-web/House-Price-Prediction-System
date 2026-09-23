@@ -15,6 +15,8 @@ import {
   ChevronRight,
   X,
   Eye,
+  LayoutGrid,
+  Table as TableIcon,
 } from "lucide-react";
 import { api } from "../lib/api";
 import { Property } from "../types/api";
@@ -27,6 +29,9 @@ export const ExplorerTab: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  // View mode
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
 
   // Filters
   const [minPrice, setMinPrice] = useState<string>("");
@@ -46,7 +51,7 @@ export const ExplorerTab: React.FC = () => {
     try {
       const res = await api.getProperties({
         page,
-        page_size: 18,
+        page_size: viewMode === "grid" ? 18 : 25,
         min_price: minPrice ? parseFloat(minPrice) : undefined,
         max_price: maxPrice ? parseFloat(maxPrice) : undefined,
         bedrooms: bedrooms !== "" ? parseInt(bedrooms) : undefined,
@@ -59,7 +64,7 @@ export const ExplorerTab: React.FC = () => {
       setTotalCount(res.total_count);
       setTotalPages(res.total_pages);
     } catch (err: any) {
-      setError(err.message || "Failed to load properties");
+      setError(err.message || "Failed to load properties from database");
     } finally {
       setLoading(false);
     }
@@ -67,7 +72,7 @@ export const ExplorerTab: React.FC = () => {
 
   useEffect(() => {
     fetchProperties();
-  }, [page, sortBy, sortOrder]);
+  }, [page, sortBy, sortOrder, viewMode]);
 
   const handleApplyFilter = (e: React.FormEvent) => {
     e.preventDefault();
@@ -175,7 +180,7 @@ export const ExplorerTab: React.FC = () => {
               type="submit"
               className="flex-1 py-1.5 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-glow transition-all"
             >
-              Search
+              Filter
             </button>
             <button
               type="button"
@@ -187,13 +192,38 @@ export const ExplorerTab: React.FC = () => {
           </div>
         </form>
 
-        {/* Sort & Result Counter Bar */}
-        <div className="flex flex-wrap items-center justify-between border-t border-slate-900 pt-3 text-xs text-slate-400">
+        {/* Sort, View Toggle & Result Counter Bar */}
+        <div className="flex flex-wrap items-center justify-between border-t border-slate-900 pt-3 text-xs text-slate-400 gap-3">
           <div>
             Showing <span className="text-white font-medium">{properties.length}</span> properties on page {page} of {totalPages}
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-4">
+            {/* View Mode Toggle */}
+            <div className="flex items-center space-x-1 p-0.5 rounded-lg bg-slate-900 border border-slate-800">
+              <button
+                type="button"
+                onClick={() => setViewMode("grid")}
+                className={`p-1.5 rounded ${
+                  viewMode === "grid" ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"
+                }`}
+                title="Grid Card View"
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("table")}
+                className={`p-1.5 rounded ${
+                  viewMode === "table" ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"
+                }`}
+                title="Dense Table View"
+              >
+                <TableIcon className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Sort Dropdowns */}
             <div className="flex items-center space-x-1.5">
               <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
               <span>Sort by:</span>
@@ -221,7 +251,7 @@ export const ExplorerTab: React.FC = () => {
         </div>
       </div>
 
-      {/* Property Cards Grid */}
+      {/* Main Content: Loading / Error / Empty / Grid / Table */}
       {loading ? (
         <div className="py-20 text-center space-y-3">
           <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto" />
@@ -229,8 +259,8 @@ export const ExplorerTab: React.FC = () => {
         </div>
       ) : error ? (
         <div className="p-6 rounded-2xl glass-panel border border-red-500/30 text-center space-y-2">
-          <p className="text-sm font-semibold text-red-400">Failed to load real properties</p>
-          <p className="text-xs text-slate-400">{error}</p>
+          <p className="text-sm font-semibold text-red-400">Failed to load properties</p>
+          <p className="text-xs text-slate-400 font-mono">{error}</p>
         </div>
       ) : properties.length === 0 ? (
         <div className="py-16 text-center glass-panel rounded-2xl border border-slate-800 space-y-2">
@@ -238,7 +268,8 @@ export const ExplorerTab: React.FC = () => {
           <p className="text-sm font-semibold text-slate-300">No properties match your filter criteria</p>
           <p className="text-xs text-slate-500">Try adjusting price or bedroom filters</p>
         </div>
-      ) : (
+      ) : viewMode === "grid" ? (
+        /* Grid Card View */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {properties.map((prop) => (
             <div
@@ -300,6 +331,81 @@ export const ExplorerTab: React.FC = () => {
             </div>
           ))}
         </div>
+      ) : (
+        /* High-Density Analyst Table View */
+        <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden shadow-glass">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-slate-800 text-[10px] font-mono uppercase text-slate-400 bg-slate-900/50">
+                  <th className="py-3 px-3">Parcel ID</th>
+                  <th className="py-3 px-3">Sale Price</th>
+                  <th className="py-3 px-3">Price / SqFt</th>
+                  <th className="py-3 px-3">Bed / Bath</th>
+                  <th className="py-3 px-3">Living Space</th>
+                  <th className="py-3 px-3">Lot Size</th>
+                  <th className="py-3 px-3">Grade</th>
+                  <th className="py-3 px-3">Built / Reno</th>
+                  <th className="py-3 px-3">ZIP Code</th>
+                  <th className="py-3 px-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-850">
+                {properties.map((prop) => {
+                  const ppsqft = Math.round(prop.price / Math.max(prop.sqft_living, 1));
+                  return (
+                    <tr
+                      key={prop.id}
+                      onClick={() => setSelectedProperty(prop)}
+                      className="hover:bg-slate-850/60 cursor-pointer transition-colors"
+                    >
+                      <td className="py-2.5 px-3 font-mono text-slate-400 text-[11px]">
+                        {prop.external_id}
+                      </td>
+                      <td className="py-2.5 px-3 font-bold text-white font-mono">
+                        {formatCurrency(prop.price)}
+                      </td>
+                      <td className="py-2.5 px-3 font-mono text-emerald-400">
+                        ${ppsqft}/sqft
+                      </td>
+                      <td className="py-2.5 px-3 text-slate-300">
+                        {prop.bedrooms}b / {prop.bathrooms}ba
+                      </td>
+                      <td className="py-2.5 px-3 font-mono text-slate-300">
+                        {prop.sqft_living.toLocaleString()} sqft
+                      </td>
+                      <td className="py-2.5 px-3 font-mono text-slate-400">
+                        {prop.sqft_lot.toLocaleString()} sqft
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300 border border-slate-700">
+                          {prop.grade_score}/13
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3 font-mono text-slate-400">
+                        {prop.yr_built} {prop.yr_renovated > 0 && `(${prop.yr_renovated})`}
+                      </td>
+                      <td className="py-2.5 px-3 font-mono text-indigo-400">
+                        {prop.zipcode}
+                      </td>
+                      <td className="py-2.5 px-3 text-right">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProperty(prop);
+                          }}
+                          className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px]"
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
 
       {/* Pagination Controls */}
@@ -355,42 +461,42 @@ export const ExplorerTab: React.FC = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
               <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
                 <span className="text-slate-400 text-[10px] uppercase">Bedrooms</span>
-                <p className="text-base font-bold text-white">{selectedProperty.bedrooms}</p>
+                <p className="text-base font-bold text-white font-mono">{selectedProperty.bedrooms}</p>
               </div>
               <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
                 <span className="text-slate-400 text-[10px] uppercase">Bathrooms</span>
-                <p className="text-base font-bold text-white">{selectedProperty.bathrooms}</p>
+                <p className="text-base font-bold text-white font-mono">{selectedProperty.bathrooms}</p>
               </div>
               <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
                 <span className="text-slate-400 text-[10px] uppercase">Living Area</span>
-                <p className="text-base font-bold text-white">{selectedProperty.sqft_living.toLocaleString()} sqft</p>
+                <p className="text-base font-bold text-white font-mono">{selectedProperty.sqft_living.toLocaleString()} sqft</p>
               </div>
               <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
                 <span className="text-slate-400 text-[10px] uppercase">Lot Size</span>
-                <p className="text-base font-bold text-white">{selectedProperty.sqft_lot.toLocaleString()} sqft</p>
+                <p className="text-base font-bold text-white font-mono">{selectedProperty.sqft_lot.toLocaleString()} sqft</p>
               </div>
 
               <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
                 <span className="text-slate-400 text-[10px] uppercase">Above Ground</span>
-                <p className="text-base font-bold text-white">{selectedProperty.sqft_above.toLocaleString()} sqft</p>
+                <p className="text-base font-bold text-white font-mono">{selectedProperty.sqft_above.toLocaleString()} sqft</p>
               </div>
               <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
                 <span className="text-slate-400 text-[10px] uppercase">Basement Area</span>
-                <p className="text-base font-bold text-white">{selectedProperty.sqft_basement.toLocaleString()} sqft</p>
+                <p className="text-base font-bold text-white font-mono">{selectedProperty.sqft_basement.toLocaleString()} sqft</p>
               </div>
               <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
                 <span className="text-slate-400 text-[10px] uppercase">Grade Rating</span>
-                <p className="text-base font-bold text-white">{selectedProperty.grade_score} / 13</p>
+                <p className="text-base font-bold text-white font-mono">{selectedProperty.grade_score} / 13</p>
               </div>
               <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
                 <span className="text-slate-400 text-[10px] uppercase">Condition</span>
-                <p className="text-base font-bold text-white">{selectedProperty.condition_score} / 5</p>
+                <p className="text-base font-bold text-white font-mono">{selectedProperty.condition_score} / 5</p>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-900/40 border border-slate-800 text-xs text-slate-300 space-y-1.5">
+            <div className="p-3.5 rounded-xl bg-slate-900/40 border border-slate-800 text-xs text-slate-300 space-y-1.5">
               <span className="font-semibold text-slate-200">Neighborhood Comparison Context</span>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-slate-400 leading-relaxed font-mono">
                 Nearest 15 homes average {selectedProperty.sqft_living15?.toLocaleString() || "N/A"} sqft interior living space and {selectedProperty.sqft_lot15?.toLocaleString() || "N/A"} sqft lot. Sale transaction was legally finalized on {selectedProperty.sale_date || "2014-2015"}.
               </p>
             </div>
