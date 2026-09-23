@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Lock, Mail, ShieldCheck, ArrowRight, Database, Sparkles, Building2, KeyRound, CheckCircle2 } from "lucide-react";
 import { BlurText } from "../effects/BlurText";
-import { BeamsBackground } from "../effects/BeamsBackground";
+import { WhiteDotBackground } from "../effects/WhiteDotBackground";
 
 interface LoginPageProps {
   onLogin: (user: { name: string; role: string; email: string }) => void;
@@ -52,16 +52,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
   return (
     <div className="min-h-screen w-full flex flex-col justify-between bg-black text-white relative selection:bg-neutral-800 selection:text-white overflow-hidden">
-      {/* React Bits Ambient Three.js Beams Background Canvas */}
-      <BeamsBackground
-        beamWidth={2}
-        beamHeight={15}
-        beamNumber={12}
-        lightColor="#ffffff"
-        speed={2}
-        noiseIntensity={1.75}
-        scale={0.2}
-        rotation={0}
+      {/* Animated White Dot Particle & Constellation Background */}
+      <WhiteDotBackground
+        dotCount={110}
+        speed={0.45}
+        maxRadius={2.4}
+        minRadius={0.9}
+        connectionDistance={115}
+        showLines={true}
       />
 
       {/* Top Institutional Header Ribbon */}
