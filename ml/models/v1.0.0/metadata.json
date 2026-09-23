@@ -1,0 +1,54 @@
+{
+  "model_name": "KingCounty_HistGradientBoosting",
+  "version": "v1.0.0",
+  "algorithm": "HistGradientBoostingRegressor",
+  "dataset_version": "kc-housing-2015-v1",
+  "training_timestamp": "2026-09-23T06:46:32.427010+00:00",
+  "random_state": 42,
+  "metrics": {
+    "test_r2": 0.8777,
+    "test_mae": 69115.12,
+    "test_rmse": 135998.18,
+    "train_samples": 17290,
+    "test_samples": 4323
+  },
+  "hyperparameters": {
+    "max_iter": 150,
+    "learning_rate": 0.08,
+    "max_leaf_nodes": 45,
+    "min_samples_leaf": 20
+  },
+  "features": {
+    "numeric": [
+      "bedrooms",
+      "bathrooms",
+      "sqft_living",
+      "sqft_lot",
+      "floors",
+      "waterfront",
+      "view_score",
+      "condition_score",
+      "grade_score",
+      "sqft_above",
+      "sqft_basement",
+      "yr_built",
+      "yr_renovated",
+      "latitude",
+      "longitude",
+      "sqft_living15",
+      "sqft_lot15",
+      "effective_age",
+      "is_renovated",
+      "living_to_lot_ratio",
+      "bed_bath_ratio",
+      "total_sqft",
+      "basement_ratio"
+    ],
+    "categorical": [
+      "zipcode"
+    ],
+    "total_input_count": 24
+  },
+  "artifact_path": "ml/models/v1.0.0/model.joblib",
+  "is_active": true
+}

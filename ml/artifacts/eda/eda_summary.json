@@ -1,0 +1,167 @@
+{
+  "dataset_name": "King County House Sales",
+  "total_records": 21613,
+  "features_analyzed": 18,
+  "target_metrics": {
+    "mean": 540088.14,
+    "median": 450000.0,
+    "std": 367127.2,
+    "iqr": 323050.0,
+    "skewness": 4.02,
+    "min": 75000.0,
+    "max": 7700000.0
+  },
+  "top_feature_correlations": {
+    "sqft_living": 0.702,
+    "grade_score": 0.6674,
+    "sqft_above": 0.6056,
+    "sqft_living15": 0.5854,
+    "bathrooms": 0.5251,
+    "view_score": 0.3973,
+    "sqft_basement": 0.3238,
+    "bedrooms": 0.3154,
+    "latitude": 0.307,
+    "waterfront": 0.2664,
+    "floors": 0.2568,
+    "yr_renovated": 0.1264,
+    "sqft_lot": 0.0897,
+    "sqft_lot15": 0.0824,
+    "yr_built": 0.054,
+    "condition_score": 0.0364,
+    "longitude": 0.0216
+  },
+  "top_10_expensive_zipcodes": [
+    {
+      "zipcode": 98039,
+      "median_price": 1892500.0,
+      "avg_price_per_sqft": 568.0833501011733,
+      "count": 50
+    },
+    {
+      "zipcode": 98004,
+      "median_price": 1150000.0,
+      "avg_price_per_sqft": 475.4356109509919,
+      "count": 317
+    },
+    {
+      "zipcode": 98040,
+      "median_price": 993750.0,
+      "avg_price_per_sqft": 387.29252438969064,
+      "count": 282
+    },
+    {
+      "zipcode": 98112,
+      "median_price": 915000.0,
+      "avg_price_per_sqft": 438.63787203584127,
+      "count": 269
+    },
+    {
+      "zipcode": 98005,
+      "median_price": 765475.0,
+      "avg_price_per_sqft": 314.92923109821106,
+      "count": 168
+    },
+    {
+      "zipcode": 98006,
+      "median_price": 760184.5,
+      "avg_price_per_sqft": 299.0914758506965,
+      "count": 498
+    },
+    {
+      "zipcode": 98119,
+      "median_price": 744975.0,
+      "avg_price_per_sqft": 432.2569983896907,
+      "count": 184
+    },
+    {
+      "zipcode": 98075,
+      "median_price": 739999.0,
+      "avg_price_per_sqft": 268.63984611658105,
+      "count": 359
+    },
+    {
+      "zipcode": 98109,
+      "median_price": 736000.0,
+      "avg_price_per_sqft": 433.4011951772738,
+      "count": 109
+    },
+    {
+      "zipcode": 98102,
+      "median_price": 720000.0,
+      "avg_price_per_sqft": 423.17249826480463,
+      "count": 105
+    }
+  ],
+  "top_10_affordable_zipcodes": [
+    {
+      "zipcode": 98002,
+      "median_price": 235000.0,
+      "avg_price_per_sqft": 151.17409095919788,
+      "count": 199
+    },
+    {
+      "zipcode": 98168,
+      "median_price": 235000.0,
+      "avg_price_per_sqft": 175.3725318004723,
+      "count": 269
+    },
+    {
+      "zipcode": 98032,
+      "median_price": 249000.0,
+      "avg_price_per_sqft": 154.21951345168029,
+      "count": 125
+    },
+    {
+      "zipcode": 98001,
+      "median_price": 260000.0,
+      "avg_price_per_sqft": 151.38793756502668,
+      "count": 362
+    },
+    {
+      "zipcode": 98188,
+      "median_price": 264000.0,
+      "avg_price_per_sqft": 169.00730625434264,
+      "count": 136
+    },
+    {
+      "zipcode": 98198,
+      "median_price": 265000.0,
+      "avg_price_per_sqft": 178.42860978855347,
+      "count": 280
+    },
+    {
+      "zipcode": 98003,
+      "median_price": 267475.0,
+      "avg_price_per_sqft": 157.11341446884097,
+      "count": 280
+    },
+    {
+      "zipcode": 98023,
+      "median_price": 268450.0,
+      "avg_price_per_sqft": 148.91982870319703,
+      "count": 499
+    },
+    {
+      "zipcode": 98148,
+      "median_price": 278000.0,
+      "avg_price_per_sqft": 185.83206191582082,
+      "count": 57
+    },
+    {
+      "zipcode": 98178,
+      "median_price": 278277.0,
+      "avg_price_per_sqft": 189.17252830749555,
+      "count": 262
+    }
+  ],
+  "renovation_impact": {
+    "unrenovated_median": 448000.0,
+    "renovated_median": 600000.0,
+    "price_delta": 152000.0
+  },
+  "waterfront_premium": {
+    "no_waterfront_median": 450000.0,
+    "waterfront_median": 1400000.0,
+    "ratio": 3.11
+  }
+}
