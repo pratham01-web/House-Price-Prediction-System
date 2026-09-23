@@ -16,9 +16,7 @@ export type TabType =
   | "explorer"
   | "predictor"
   | "analytics"
-  | "history"
-  | "model"
-  | "methodology";
+  | "history";
 
 interface NavbarProps {
   activeTab: TabType;
@@ -39,8 +37,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: "predictor", label: "Valuation Studio", icon: Calculator },
     { id: "analytics", label: "Market Analytics", icon: BarChart3 },
     { id: "history", label: "Prediction History", icon: History },
-    { id: "model", label: "Model Performance", icon: Cpu },
-    { id: "methodology", label: "Methodology", icon: ShieldCheck },
   ];
 
   return (

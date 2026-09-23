@@ -9,18 +9,14 @@ import { ExplorerTab } from "../components/ExplorerTab";
 import { PredictorTab } from "../components/PredictorTab";
 import { AnalyticsTab } from "../components/AnalyticsTab";
 import { HistoryTab } from "../components/HistoryTab";
-import { ModelTab } from "../components/ModelTab";
-import { MethodologyView } from "../components/methodology/MethodologyView";
 import { api } from "../lib/api";
-import { MarketSummary, ModelVersion } from "../types/api";
+import { MarketSummary, ModelVersion, Property } from "../types/api";
 import {
   LayoutDashboard,
   Search,
   Calculator,
   BarChart3,
   History,
-  Cpu,
-  BookOpen,
   X,
   Building2,
 } from "lucide-react";
@@ -31,6 +27,7 @@ export default function Home() {
   const [activeModel, setActiveModel] = useState<ModelVersion | null>(null);
   const [marketSummary, setMarketSummary] = useState<MarketSummary | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [selectedPropertyForValuation, setSelectedPropertyForValuation] = useState<Property | null>(null);
 
   useEffect(() => {
     async function initPlatform() {
@@ -58,14 +55,17 @@ export default function Home() {
   }, []);
 
   const mobileNavItems: { id: TabType; label: string; icon: React.ElementType }[] = [
-    { id: "overview", label: "Overview", icon: LayoutDashboard },
+    { id: "overview", label: "Executive Overview", icon: LayoutDashboard },
     { id: "explorer", label: "Property Explorer", icon: Search },
     { id: "analytics", label: "Market Analytics", icon: BarChart3 },
     { id: "predictor", label: "Valuation Studio", icon: Calculator },
     { id: "history", label: "Prediction History", icon: History },
-    { id: "model", label: "Model Performance", icon: Cpu },
-    { id: "methodology", label: "Methodology", icon: BookOpen },
   ];
+
+  const handleSendToPredictor = (property: Property) => {
+    setSelectedPropertyForValuation(property);
+    setActiveTab("predictor");
+  };
 
   return (
     <div className="min-h-screen flex bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
@@ -90,7 +90,7 @@ export default function Home() {
           <div className="relative flex flex-col w-72 max-w-xs bg-slate-950 border-r border-slate-850 p-6 z-10 space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white">
                   <Building2 className="w-4 h-4" />
                 </div>
                 <span className="font-extrabold text-sm text-white tracking-tight">
@@ -147,7 +147,7 @@ export default function Home() {
           setMobileMenuOpen={setMobileMenuOpen}
         />
 
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-1 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
           {activeTab === "overview" && (
             <OverviewTab
               summary={marketSummary}
@@ -156,36 +156,36 @@ export default function Home() {
             />
           )}
 
-          {activeTab === "explorer" && <ExplorerTab />}
+          {activeTab === "explorer" && (
+            <ExplorerTab onSendToPredictor={handleSendToPredictor} />
+          )}
 
-          {activeTab === "predictor" && <PredictorTab />}
+          {activeTab === "predictor" && (
+            <PredictorTab prefilledProperty={selectedPropertyForValuation} />
+          )}
 
           {activeTab === "analytics" && <AnalyticsTab />}
 
           {activeTab === "history" && <HistoryTab />}
-
-          {activeTab === "model" && <ModelTab />}
-
-          {activeTab === "methodology" && <MethodologyView />}
         </main>
 
         {/* Institutional Real Estate Footer */}
         <footer className="border-t border-slate-900 bg-slate-950/60 py-6 mt-12 text-xs text-slate-500">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
-              <p className="font-semibold text-slate-400">
+              <p className="font-semibold text-slate-300">
                 House Price Intelligence & Prediction Platform
               </p>
-              <p className="text-[11px] text-slate-600 font-mono">
-                King County Department of Assessments · OpenML Dataset 42092 · 21,613 Records
+              <p className="text-[11px] text-slate-500 font-mono">
+                King County Department of Assessments · OpenML Dataset 42092 · 21,613 Verified Transaction Deeds
               </p>
             </div>
             <div className="flex items-center space-x-4 text-[11px] font-mono">
-              <span>FastAPI 0.111+</span>
+              <span className="text-emerald-400">FastAPI 0.111+</span>
               <span>•</span>
-              <span>PostgreSQL 16</span>
+              <span className="text-indigo-400">PostgreSQL 16 (Port 5432)</span>
               <span>•</span>
-              <span>HistGradientBoosting (R² 0.88)</span>
+              <span className="text-cyan-400">HistGradientBoosting (R² 0.88)</span>
               <span>•</span>
               <span>Next.js 14 App Router</span>
             </div>

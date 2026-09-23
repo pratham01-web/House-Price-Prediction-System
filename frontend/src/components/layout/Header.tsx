@@ -3,8 +3,8 @@ import { Activity, ShieldCheck, Database, Menu, X, ArrowUpRight } from "lucide-r
 import { TabType } from "../Navbar";
 
 interface HeaderProps {
-  activeTab: TabType | "methodology";
-  setActiveTab: (tab: any) => void;
+  activeTab: TabType;
+  setActiveTab: (tab: TabType) => void;
   systemHealthy: boolean;
   activeModelVersion: string;
   mobileMenuOpen: boolean;
@@ -19,14 +19,12 @@ export const Header: React.FC<HeaderProps> = ({
   mobileMenuOpen,
   setMobileMenuOpen,
 }) => {
-  const titles: Record<string, string> = {
-    overview: "Market Overview & Key Performance Indicators",
-    explorer: "Property Explorer & Transaction Registry",
-    predictor: "Machine Learning Valuation Studio",
-    analytics: "Empirical Real Estate Analytics",
+  const titles: Record<TabType, string> = {
+    overview: "Institutional Market Terminal & Core KPIs",
+    explorer: "Verified Property Screener (21,613 Deeds)",
+    predictor: "Machine Learning Appraisal & Valuation Studio",
+    analytics: "Empirical Real Estate Analytics & Distributions",
     history: "PostgreSQL Prediction Audit History",
-    model: "Model Performance Hub & Benchmarks",
-    methodology: "Data Pipeline & ML Methodology",
   };
 
   return (
