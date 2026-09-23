@@ -1,5 +1,5 @@
 import React from "react";
-import { Activity, ShieldCheck, Database, Menu, X, ArrowUpRight } from "lucide-react";
+import { Activity, ShieldCheck, Database, Menu, X, ArrowUpRight, LogOut } from "lucide-react";
 import { TabType } from "../Navbar";
 
 interface HeaderProps {
@@ -9,6 +9,8 @@ interface HeaderProps {
   activeModelVersion: string;
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
+  user?: { name: string; email: string; role?: string } | null;
+  onLogout?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -18,6 +20,8 @@ export const Header: React.FC<HeaderProps> = ({
   activeModelVersion,
   mobileMenuOpen,
   setMobileMenuOpen,
+  user,
+  onLogout,
 }) => {
   const titles: Record<TabType, string> = {
     overview: "Institutional Market Terminal & Core KPIs",
@@ -69,6 +73,18 @@ export const Header: React.FC<HeaderProps> = ({
           <span>Swagger API</span>
           <ArrowUpRight className="w-3 h-3 text-neutral-400" />
         </a>
+
+        {onLogout && (
+          <button
+            type="button"
+            onClick={onLogout}
+            className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-850 text-neutral-300 hover:text-white border border-neutral-800 text-xs font-medium transition-all"
+            title="Lock Terminal & Sign Out"
+          >
+            <LogOut className="w-3.5 h-3.5 text-neutral-400" />
+            <span className="hidden sm:inline">Sign Out</span>
+          </button>
+        )}
       </div>
     </header>
   );

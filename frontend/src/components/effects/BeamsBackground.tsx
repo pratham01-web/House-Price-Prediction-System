@@ -35,18 +35,26 @@ class BeamsErrorBoundary extends Component<{ children: ReactNode }, { hasError: 
 
 interface BeamsBackgroundProps {
   className?: string;
+  beamWidth?: number;
+  beamHeight?: number;
   beamNumber?: number;
   lightColor?: string;
   speed?: number;
   noiseIntensity?: number;
+  scale?: number;
+  rotation?: number;
 }
 
 export const BeamsBackground: React.FC<BeamsBackgroundProps> = ({
   className = "",
+  beamWidth = 2,
+  beamHeight = 15,
   beamNumber = 12,
   lightColor = "#ffffff",
-  speed = 1.2,
-  noiseIntensity = 1.5,
+  speed = 2,
+  noiseIntensity = 1.75,
+  scale = 0.2,
+  rotation = 0,
 }) => {
   const [mounted, setMounted] = useState(false);
 
@@ -63,16 +71,16 @@ export const BeamsBackground: React.FC<BeamsBackgroundProps> = ({
       <BeamsErrorBoundary>
         <div className="w-full h-full opacity-65">
           <Beams
-            beamWidth={2}
-            beamHeight={16}
+            beamWidth={beamWidth}
+            beamHeight={beamHeight}
             beamNumber={beamNumber}
             lightColor={lightColor}
             beamColor="#000000"
             backgroundColor="#000000"
             speed={speed}
             noiseIntensity={noiseIntensity}
-            scale={0.2}
-            rotation={0}
+            scale={scale}
+            rotation={rotation}
           />
         </div>
       </BeamsErrorBoundary>

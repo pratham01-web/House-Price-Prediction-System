@@ -8,6 +8,7 @@ import {
   Building2,
   Activity,
   Layers,
+  LogOut,
 } from "lucide-react";
 import { TabType } from "../Navbar";
 
@@ -16,6 +17,8 @@ interface SidebarProps {
   setActiveTab: (tab: TabType) => void;
   systemHealthy: boolean;
   activeModelVersion: string;
+  user?: { name: string; email: string; role?: string } | null;
+  onLogout?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -23,6 +26,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveTab,
   systemHealthy,
   activeModelVersion,
+  user,
+  onLogout,
 }) => {
   const navSections = [
     {
@@ -136,6 +141,30 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <span>v1.0.0</span>
         </div>
       </div>
+
+      {/* Analyst Profile & Sign Out Action */}
+      {user && (
+        <div className="p-3 rounded-xl bg-neutral-950 border border-neutral-850 flex items-center justify-between">
+          <div className="flex items-center space-x-2.5 overflow-hidden">
+            <div className="w-8 h-8 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white font-mono font-bold text-xs flex-shrink-0">
+              {user.name.slice(0, 2).toUpperCase()}
+            </div>
+            <div className="truncate">
+              <span className="text-xs font-bold text-white block truncate">{user.name}</span>
+              <span className="text-[10px] text-neutral-400 font-mono block truncate">{user.role || "Analyst"}</span>
+            </div>
+          </div>
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              title="Lock Terminal & Sign Out"
+              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors flex-shrink-0 ml-1"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      )}
     </aside>
   );
 };

@@ -10,6 +10,7 @@ import { PredictorTab } from "../components/PredictorTab";
 import { AnalyticsTab } from "../components/AnalyticsTab";
 import { HistoryTab } from "../components/HistoryTab";
 import { BeamsBackground } from "../components/effects/BeamsBackground";
+import { LoginPage } from "../components/auth/LoginPage";
 import { api } from "../lib/api";
 import { MarketSummary, ModelVersion, Property } from "../types/api";
 import {
@@ -20,15 +21,32 @@ import {
   History,
   X,
   Building2,
+  LogOut,
 } from "lucide-react";
 
 export default function Home() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [user, setUser] = useState<{ name: string; email: string; role: string } | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   const [systemHealthy, setSystemHealthy] = useState<boolean>(true);
   const [activeModel, setActiveModel] = useState<ModelVersion | null>(null);
   const [marketSummary, setMarketSummary] = useState<MarketSummary | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [selectedPropertyForValuation, setSelectedPropertyForValuation] = useState<Property | null>(null);
+
+  useEffect(() => {
+    // Check if session exists in sessionStorage
+    try {
+      const saved = sessionStorage.getItem("realestateiq_session");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setUser(parsed);
+        setIsAuthenticated(true);
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
 
   useEffect(() => {
     async function initPlatform() {
@@ -55,6 +73,26 @@ export default function Home() {
     initPlatform();
   }, []);
 
+  const handleLogin = (userData: { name: string; role: string; email: string }) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+    try {
+      sessionStorage.setItem("realestateiq_session", JSON.stringify(userData));
+    } catch (e) {
+      // ignore
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    try {
+      sessionStorage.removeItem("realestateiq_session");
+    } catch (e) {
+      // ignore
+    }
+  };
+
   const mobileNavItems: { id: TabType; label: string; icon: React.ElementType }[] = [
     { id: "overview", label: "Executive Overview", icon: LayoutDashboard },
     { id: "explorer", label: "Property Explorer", icon: Search },
@@ -68,14 +106,22 @@ export default function Home() {
     setActiveTab("predictor");
   };
 
+  if (!isAuthenticated) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
   return (
     <div className="min-h-screen flex bg-black text-white selection:bg-neutral-800 selection:text-white relative">
       {/* React Bits Ambient Three.js Beams Background Canvas */}
       <BeamsBackground
-        lightColor="#ffffff"
-        speed={1.2}
-        noiseIntensity={1.5}
+        beamWidth={2}
+        beamHeight={15}
         beamNumber={12}
+        lightColor="#ffffff"
+        speed={2}
+        noiseIntensity={1.75}
+        scale={0.2}
+        rotation={0}
       />
 
       {/* Desktop Persistent Sidebar */}
@@ -88,6 +134,8 @@ export default function Home() {
           }}
           systemHealthy={systemHealthy}
           activeModelVersion={activeModel?.version || "v1.0.0"}
+          user={user}
+          onLogout={handleLogout}
         />
       </div>
 
@@ -98,6 +146,7 @@ export default function Home() {
             className="fixed inset-0 bg-black/85 backdrop-blur-md"
             onClick={() => setMobileMenuOpen(false)}
           />
+
           <div className="relative flex flex-col w-72 max-w-xs bg-black border-r border-neutral-800 p-6 z-10 space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2.5">
@@ -140,8 +189,25 @@ export default function Home() {
               })}
             </nav>
 
-            <div className="pt-4 border-t border-neutral-900 text-[11px] font-mono text-neutral-500">
-              King County 21,613 Validated Deeds
+            <div className="pt-4 border-t border-neutral-900 space-y-3">
+              {user && (
+                <div className="flex items-center justify-between p-2 rounded-lg bg-neutral-950 border border-neutral-800 text-xs font-mono">
+                  <div className="truncate">
+                    <span className="text-white block font-semibold truncate">{user.name}</span>
+                    <span className="text-neutral-500 block text-[10px] truncate">{user.email}</span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="p-1.5 text-neutral-400 hover:text-white"
+                    title="Sign Out"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+              <div className="text-[11px] font-mono text-neutral-500">
+                King County 21,613 Validated Deeds
+              </div>
             </div>
           </div>
         </div>
@@ -156,6 +222,8 @@ export default function Home() {
           activeModelVersion={activeModel?.version || "v1.0.0"}
           mobileMenuOpen={mobileMenuOpen}
           setMobileMenuOpen={setMobileMenuOpen}
+          user={user}
+          onLogout={handleLogout}
         />
 
         <main className="flex-1 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
