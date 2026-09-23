@@ -24,9 +24,15 @@ import {
   LogOut,
 } from "lucide-react";
 
+const DEFAULT_USER = {
+  name: "Senior Portfolio Analyst",
+  role: "Institutional Principal",
+  email: "analyst@firm.realestateiq.internal",
+};
+
 export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<{ name: string; email: string; role: string } | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [user, setUser] = useState<{ name: string; email: string; role: string } | null>(DEFAULT_USER);
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   const [systemHealthy, setSystemHealthy] = useState<boolean>(true);
   const [activeModel, setActiveModel] = useState<ModelVersion | null>(null);
@@ -35,8 +41,14 @@ export default function Home() {
   const [selectedPropertyForValuation, setSelectedPropertyForValuation] = useState<Property | null>(null);
 
   useEffect(() => {
-    // Check if session exists in sessionStorage
+    // Check if user explicitly logged out in this session
     try {
+      const explicitLogout = sessionStorage.getItem("realestateiq_logged_out");
+      if (explicitLogout === "true") {
+        setIsAuthenticated(false);
+        setUser(null);
+        return;
+      }
       const saved = sessionStorage.getItem("realestateiq_session");
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -77,6 +89,7 @@ export default function Home() {
     setUser(userData);
     setIsAuthenticated(true);
     try {
+      sessionStorage.removeItem("realestateiq_logged_out");
       sessionStorage.setItem("realestateiq_session", JSON.stringify(userData));
     } catch (e) {
       // ignore
@@ -87,6 +100,7 @@ export default function Home() {
     setIsAuthenticated(false);
     setUser(null);
     try {
+      sessionStorage.setItem("realestateiq_logged_out", "true");
       sessionStorage.removeItem("realestateiq_session");
     } catch (e) {
       // ignore

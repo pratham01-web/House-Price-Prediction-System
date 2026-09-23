@@ -96,6 +96,38 @@ npm install
 cd ..
 ```
 
+### Running the Application
+
+#### Option A: One-Command Unified Launcher (Recommended)
+```bash
+# Runs both FastAPI Backend (port 8000) and Next.js Frontend (port 3000)
+python run.py
+
+# Or on Windows, double-click:
+start.bat
+```
+
+#### Option B: Independent Terminals
+```bash
+# Terminal 1 - Backend API (FastAPI + Uvicorn)
+uvicorn app.main:app --app-dir backend --port 8000 --reload
+
+# Terminal 2 - Frontend Web Terminal (Next.js)
+npm --prefix frontend run dev
+```
+
+#### Option C: Docker Compose (All-in-One Containerized)
+```bash
+docker compose up --build
+```
+
+### Accessing the Platform
+
+- **Executive Web UI**: [http://localhost:3000](http://localhost:3000)
+- **FastAPI Service**: [http://localhost:8000](http://localhost:8000)
+- **Interactive Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **System Health Endpoint**: [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
+
 ---
 
 ## 5. Development Phases Roadmap (100% Completed)

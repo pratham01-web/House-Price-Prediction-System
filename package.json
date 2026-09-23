@@ -1,0 +1,14 @@
+{
+  "name": "house-price-prediction-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade Machine Learning and Real Estate Analytics platform",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "python -m uvicorn app.main:app --app-dir backend --port 8000 --reload",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix frontend run start",
+    "test": "pytest"
+  }
+}

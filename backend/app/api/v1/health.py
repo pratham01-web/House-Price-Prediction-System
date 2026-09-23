@@ -7,7 +7,7 @@ from app.core.config import settings
 router = APIRouter(tags=["Health"])
 
 
-@router.get("/health")
+@router.api_route("/health", methods=["GET", "HEAD"])
 def health_check(db: Session = Depends(get_db)):
     """Verifies service health, database connectivity, and configuration."""
     db_ok = False
