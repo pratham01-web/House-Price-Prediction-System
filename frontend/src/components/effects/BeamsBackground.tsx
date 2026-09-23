@@ -39,6 +39,7 @@ interface BeamsBackgroundProps {
   beamHeight?: number;
   beamNumber?: number;
   lightColor?: string;
+  beamColor?: string;
   speed?: number;
   noiseIntensity?: number;
   scale?: number;
@@ -51,6 +52,7 @@ export const BeamsBackground: React.FC<BeamsBackgroundProps> = ({
   beamHeight = 15,
   beamNumber = 12,
   lightColor = "#ffffff",
+  beamColor = "#ffffff",
   speed = 2,
   noiseIntensity = 1.75,
   scale = 0.2,
@@ -69,13 +71,13 @@ export const BeamsBackground: React.FC<BeamsBackgroundProps> = ({
   return (
     <div className={`fixed inset-0 pointer-events-none overflow-hidden z-0 bg-black ${className}`}>
       <BeamsErrorBoundary>
-        <div className="w-full h-full opacity-65">
+        <div className="w-full h-full opacity-100">
           <Beams
             beamWidth={beamWidth}
             beamHeight={beamHeight}
             beamNumber={beamNumber}
             lightColor={lightColor}
-            beamColor="#000000"
+            beamColor={beamColor}
             backgroundColor="#000000"
             speed={speed}
             noiseIntensity={noiseIntensity}
@@ -84,8 +86,8 @@ export const BeamsBackground: React.FC<BeamsBackgroundProps> = ({
           />
         </div>
       </BeamsErrorBoundary>
-      {/* Subtle radial gradient overlay to ensure full readability of content */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/60 pointer-events-none" />
+      {/* Gentle vignette around outer edges only, preserving full center beam visibility */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.6)_100%)] pointer-events-none" />
     </div>
   );
 };

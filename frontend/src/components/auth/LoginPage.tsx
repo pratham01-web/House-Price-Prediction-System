@@ -228,22 +228,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               <span>1-Click Senior Analyst Demo Access</span>
             </button>
           </div>
-
-          {/* Institutional Trust Indicators */}
-          <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-mono text-neutral-400 pt-2">
-            <div className="p-2 rounded-xl bg-neutral-950/60 border border-neutral-850 space-y-0.5">
-              <span className="text-white font-bold block">21,613</span>
-              <span className="text-neutral-500">Verified Deeds</span>
-            </div>
-            <div className="p-2 rounded-xl bg-neutral-950/60 border border-neutral-850 space-y-0.5">
-              <span className="text-emerald-400 font-bold block">0.8846 R²</span>
-              <span className="text-neutral-500">Benchmark Fit</span>
-            </div>
-            <div className="p-2 rounded-xl bg-neutral-950/60 border border-neutral-850 space-y-0.5">
-              <span className="text-white font-bold block">0 Fake Data</span>
-              <span className="text-neutral-500">Strict Real Data</span>
-            </div>
-          </div>
         </div>
       </main>
 

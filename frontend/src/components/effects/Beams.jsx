@@ -149,7 +149,7 @@ const Beams = ({
   beamHeight = 15,
   beamNumber = 12,
   lightColor = '#ffffff',
-  beamColor = '#000000',
+  beamColor = '#ffffff',
   backgroundColor = '#000000',
   speed = 2,
   noiseIntensity = 1.75,
@@ -292,7 +292,7 @@ const MergedPlanes = forwardRef(({ material, width, count, height }, ref) => {
   );
   useFrame((_, delta) => {
     if (mesh.current?.material?.uniforms?.time) {
-      mesh.current.material.uniforms.time.value += 0.1 * delta;
+      mesh.current.material.uniforms.time.value += delta;
     }
   });
   return <mesh ref={mesh} geometry={geometry} material={material} />;
@@ -317,7 +317,7 @@ const DirLight = ({ position, color }) => {
     cam.far = 64;
     dir.current.shadow.bias = -0.004;
   }, []);
-  return <directionalLight ref={dir} color={color} intensity={1} position={position} />;
+  return <directionalLight ref={dir} color={color} intensity={2.2} position={position} />;
 };
 
 export default Beams;
