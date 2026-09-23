@@ -36,12 +36,14 @@ class PredictionService:
     def get_pipeline(cls, model_version: str = "v1.0.0"):
         """Cached loader for the serialized Scikit-learn Pipeline artifact."""
         if cls._pipeline is None:
-            artifact_path = os.path.join(
-                settings.MODEL_REGISTRY_DIR, model_version, "model.joblib"
-            )
-            metadata_path = os.path.join(
-                settings.MODEL_REGISTRY_DIR, model_version, "metadata.json"
-            )
+            # Check relative to current working directory or relative to project root
+            base_dir = settings.MODEL_REGISTRY_DIR
+            if not os.path.exists(base_dir):
+                project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+                base_dir = os.path.join(project_root, settings.MODEL_REGISTRY_DIR)
+
+            artifact_path = os.path.join(base_dir, model_version, "model.joblib")
+            metadata_path = os.path.join(base_dir, model_version, "metadata.json")
 
             if not os.path.exists(artifact_path):
                 raise FileNotFoundError(
