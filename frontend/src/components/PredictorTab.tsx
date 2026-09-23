@@ -5,15 +5,12 @@ import {
   ShieldCheck,
   TrendingUp,
   MapPin,
-  Clock,
   CheckCircle2,
   AlertCircle,
-  HelpCircle,
   Printer,
   DollarSign,
   Percent,
   Home,
-  Layers,
   ArrowRight,
 } from "lucide-react";
 import { api } from "../lib/api";
@@ -95,7 +92,7 @@ const KING_COUNTY_ZIPS = [
 
 const PRESETS = [
   {
-    name: "🏙️ Seattle Craftsman",
+    name: "Seattle Craftsman",
     subtitle: "Green Lake · 98103",
     data: {
       bedrooms: 3,
@@ -115,7 +112,7 @@ const PRESETS = [
     },
   },
   {
-    name: "💎 Bellevue Tech Executive",
+    name: "Bellevue Tech Executive",
     subtitle: "Downtown Core · 98004",
     data: {
       bedrooms: 4,
@@ -135,7 +132,7 @@ const PRESETS = [
     },
   },
   {
-    name: "👑 Medina Lakefront Estate",
+    name: "Medina Lakefront Estate",
     subtitle: "Gold Coast · 98039",
     data: {
       bedrooms: 5,
@@ -155,7 +152,7 @@ const PRESETS = [
     },
   },
   {
-    name: "🌲 Redmond Suburban Modern",
+    name: "Redmond Suburban Modern",
     subtitle: "Tech Corridor · 98052",
     data: {
       bedrooms: 4,
@@ -175,7 +172,7 @@ const PRESETS = [
     },
   },
   {
-    name: "🏷️ Auburn Starter Home",
+    name: "Auburn Starter Home",
     subtitle: "South Valley · 98002",
     data: {
       bedrooms: 3,
@@ -267,19 +264,19 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
   const loanPrincipal = price * 0.8;
   const monthlyRate = 0.065 / 12;
   const monthlyPI = price > 0 ? (loanPrincipal * (monthlyRate * Math.pow(1 + monthlyRate, 360))) / (Math.pow(1 + monthlyRate, 360) - 1) : 0;
-  const monthlyTax = (price * 0.01025) / 12; // King County effective rate ~1.025%
+  const monthlyTax = (price * 0.01025) / 12;
   const totalMonthlyHolding = Math.round(monthlyPI + monthlyTax + 125);
 
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Scenario Presets Bar */}
-      <div className="glass-panel p-4 rounded-2xl border border-slate-800 space-y-2.5 shadow-sm">
+      <div className="glass-panel p-4 rounded-2xl border border-neutral-850 space-y-2.5 shadow-sm">
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">
-            Benchmark Scenario Presets
+          <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider font-mono">
+            Benchmark Archetype Presets
           </span>
-          <span className="text-[10px] text-slate-500 font-mono">
-            1-Click Populate Real King County Archetypes
+          <span className="text-[10px] text-neutral-500 font-mono">
+            1-Click Populate Real King County Housing Archetypes
           </span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
@@ -291,10 +288,10 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
                 setFormData(p.data);
                 setResult(null);
               }}
-              className="p-2.5 rounded-xl bg-slate-900/60 hover:bg-indigo-950/40 border border-slate-800 hover:border-indigo-500/30 text-left transition-all group"
+              className="p-3 rounded-xl bg-neutral-950 hover:bg-neutral-900 border border-neutral-850 hover:border-neutral-700 text-left transition-all group"
             >
-              <p className="text-xs font-bold text-slate-200 group-hover:text-white truncate">{p.name}</p>
-              <p className="text-[10px] text-slate-400 font-mono truncate">{p.subtitle}</p>
+              <p className="text-xs font-bold text-white group-hover:text-white truncate">{p.name}</p>
+              <p className="text-[10px] text-neutral-400 font-mono truncate">{p.subtitle}</p>
             </button>
           ))}
         </div>
@@ -303,28 +300,28 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
       {/* Main Valuation Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Input Form Terminal (7 Cols) */}
-        <div className="lg:col-span-7 glass-panel p-6 sm:p-7 rounded-2xl border border-slate-800 space-y-6 shadow-terminal">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div className="lg:col-span-7 glass-panel p-6 sm:p-7 rounded-2xl border border-neutral-850 space-y-6 shadow-terminal">
+          <div className="flex items-center justify-between border-b border-neutral-850 pb-4">
             <div className="flex items-center space-x-2.5">
-              <div className="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+              <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800 text-white">
                 <Calculator className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-bold text-white tracking-tight">
                   Property Specification Matrix
                 </h3>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-neutral-400">
                   Parameters will be fed into the versioned tree ensemble estimator
                 </p>
               </div>
             </div>
-            <span className="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-300">
+            <span className="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 text-[10px] font-mono text-neutral-300">
               14 Validated Features
             </span>
           </div>
 
           {error && (
-            <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center space-x-2">
+            <div className="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-center space-x-2">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{error}</span>
             </div>
@@ -333,17 +330,17 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Spatial Location */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-300 flex items-center justify-between">
+              <label className="text-xs font-bold text-neutral-300 flex items-center justify-between">
                 <span className="flex items-center space-x-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-indigo-400" />
+                  <MapPin className="w-3.5 h-3.5 text-white" />
                   <span>King County Sub-Market (ZIP Code)</span>
                 </span>
-                <span className="text-[10px] font-mono text-slate-500">70 Verified Geographic Zones</span>
+                <span className="text-[10px] font-mono text-neutral-500">70 Verified Geographic Zones</span>
               </label>
               <select
                 value={formData.zipcode}
                 onChange={(e) => setFormData({ ...formData, zipcode: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs bg-slate-900 text-white font-mono"
+                className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs bg-neutral-950 text-white font-mono"
               >
                 {KING_COUNTY_ZIPS.map((z) => (
                   <option key={z.code} value={z.code}>
@@ -356,7 +353,7 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
             {/* Core Physical Features */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div>
-                <label className="text-xs text-slate-300 font-medium">Bedrooms</label>
+                <label className="text-xs text-neutral-300 font-medium">Bedrooms</label>
                 <input
                   type="number"
                   min="1"
@@ -369,7 +366,7 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium">Bathrooms</label>
+                <label className="text-xs text-neutral-300 font-medium">Bathrooms</label>
                 <input
                   type="number"
                   min="0.5"
@@ -383,7 +380,7 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium">Finished Living (SF)</label>
+                <label className="text-xs text-neutral-300 font-medium">Finished Living (SF)</label>
                 <input
                   type="number"
                   min="300"
@@ -404,7 +401,7 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium">Lot Size (SF)</label>
+                <label className="text-xs text-neutral-300 font-medium">Lot Size (SF)</label>
                 <input
                   type="number"
                   min="500"
@@ -421,14 +418,14 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
             {/* Quality & Construction Ratings */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="text-xs text-slate-300 font-medium flex items-center justify-between">
+                <label className="text-xs text-neutral-300 font-medium flex items-center justify-between">
                   <span>Construction Grade</span>
-                  <span className="text-[10px] font-mono text-indigo-400">{formData.grade_score}/13</span>
+                  <span className="text-[10px] font-mono text-white">{formData.grade_score}/13</span>
                 </label>
                 <select
                   value={formData.grade_score}
                   onChange={(e) => setFormData({ ...formData, grade_score: parseInt(e.target.value) })}
-                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-slate-900"
+                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-neutral-950"
                 >
                   <option value="6">Grade 6 - Low Quality Cabin</option>
                   <option value="7">Grade 7 - Average Construction</option>
@@ -442,14 +439,14 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium flex items-center justify-between">
+                <label className="text-xs text-neutral-300 font-medium flex items-center justify-between">
                   <span>Physical Condition</span>
-                  <span className="text-[10px] font-mono text-indigo-400">{formData.condition_score}/5</span>
+                  <span className="text-[10px] font-mono text-white">{formData.condition_score}/5</span>
                 </label>
                 <select
                   value={formData.condition_score}
                   onChange={(e) => setFormData({ ...formData, condition_score: parseInt(e.target.value) })}
-                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-slate-900"
+                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-neutral-950"
                 >
                   <option value="1">1 - Poor / Major Repairs</option>
                   <option value="2">2 - Fair / Deferred Wear</option>
@@ -460,11 +457,11 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium">Stories / Floors</label>
+                <label className="text-xs text-neutral-300 font-medium">Stories / Floors</label>
                 <select
                   value={formData.floors}
                   onChange={(e) => setFormData({ ...formData, floors: parseFloat(e.target.value) })}
-                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-slate-900"
+                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-neutral-950"
                 >
                   <option value="1">1.0 Story (Ranch)</option>
                   <option value="1.5">1.5 Story (Cape Cod)</option>
@@ -478,23 +475,23 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
             {/* Waterfront & View Premiums */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="text-xs text-slate-300 font-medium">Waterfront Access</label>
+                <label className="text-xs text-neutral-300 font-medium">Waterfront Access</label>
                 <select
                   value={formData.waterfront}
                   onChange={(e) => setFormData({ ...formData, waterfront: parseInt(e.target.value) })}
-                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-slate-900 font-mono"
+                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-neutral-950 font-mono"
                 >
                   <option value="0">0 - No Waterfront</option>
-                  <option value="1">1 - Direct Waterfront (+3.1x Alpha)</option>
+                  <option value="1">1 - Direct Waterfront (+3.11x Alpha)</option>
                 </select>
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium">Scenic View Rating</label>
+                <label className="text-xs text-neutral-300 font-medium">Scenic View Rating</label>
                 <select
                   value={formData.view_score}
                   onChange={(e) => setFormData({ ...formData, view_score: parseInt(e.target.value) })}
-                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-slate-900 font-mono"
+                  className="w-full mt-1 px-3 py-2 rounded-xl glass-input text-xs bg-neutral-950 font-mono"
                 >
                   <option value="0">0 - Standard / Territorial</option>
                   <option value="1">1 - Fair View</option>
@@ -505,7 +502,7 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium">Finished Basement (SF)</label>
+                <label className="text-xs text-neutral-300 font-medium">Finished Basement (SF)</label>
                 <input
                   type="number"
                   min="0"
@@ -528,7 +525,7 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
             {/* Vintage & Modernization */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-slate-300 font-medium">Year Built</label>
+                <label className="text-xs text-neutral-300 font-medium">Year Built</label>
                 <input
                   type="number"
                   min="1900"
@@ -540,7 +537,7 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium">Year Renovated (0 if original)</label>
+                <label className="text-xs text-neutral-300 font-medium">Year Renovated (0 if original)</label>
                 <input
                   type="number"
                   min="0"
@@ -555,16 +552,16 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-extrabold text-sm shadow-glow flex items-center justify-center space-x-2 transition-all disabled:opacity-50"
+              className="w-full py-4 rounded-xl bg-white hover:bg-neutral-200 text-black font-extrabold text-sm shadow-sm flex items-center justify-center space-x-2 transition-all disabled:opacity-50"
             >
               {loading ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
                   <span>Computing Tree-Ensemble Valuation...</span>
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4 text-cyan-200" />
+                  <Sparkles className="w-4 h-4 text-black" />
                   <span>Calculate Institutional Fair Market Valuation</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
@@ -576,39 +573,39 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
         {/* Output Valuation Memorandum (5 Cols) */}
         <div className="lg:col-span-5 space-y-6">
           {result ? (
-            <div className="glass-panel p-6 sm:p-7 rounded-2xl border border-indigo-500/30 space-y-5 shadow-terminal relative overflow-hidden animate-fadeIn">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div className="glass-panel p-6 sm:p-7 rounded-2xl border border-neutral-800 space-y-5 shadow-terminal relative overflow-hidden animate-fadeIn">
+              <div className="flex items-center justify-between border-b border-neutral-850 pb-3">
                 <span className="text-xs font-mono text-emerald-400 flex items-center space-x-1.5 font-bold">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Valuation Computed & Persisted</span>
+                  <span>Valuation Computed & Audited</span>
                 </span>
-                <span className="text-[11px] text-slate-400 font-mono">
+                <span className="text-[11px] text-neutral-400 font-mono">
                   {result.latency_ms} ms Latency
                 </span>
               </div>
 
-              {/* Main Glowing Valuation */}
+              {/* Main Valuation Heading */}
               <div className="space-y-1">
-                <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">
+                <span className="text-xs text-neutral-400 uppercase font-bold tracking-wider">
                   Estimated Fair Market Value (FMV)
                 </span>
-                <div className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300 tracking-tight font-mono">
+                <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight font-mono">
                   {formatCurrency(result.predicted_price)}
                 </div>
               </div>
 
               {/* 1-Sigma Empirical Confidence Band */}
-              <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-2">
+              <div className="p-4 rounded-xl bg-neutral-950 border border-neutral-850 space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-slate-400">1-Sigma Empirical Spread</span>
-                  <span className="text-slate-200 font-bold">
+                  <span className="text-neutral-400">1-Sigma Empirical Spread</span>
+                  <span className="text-white font-bold">
                     {formatCurrency(result.confidence_range.lower_bound)} – {formatCurrency(result.confidence_range.upper_bound)}
                   </span>
                 </div>
-                <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden p-0.5">
-                  <div className="bg-gradient-to-r from-indigo-500 to-cyan-400 h-full w-3/5 mx-auto rounded-full" />
+                <div className="w-full bg-neutral-900 h-2 rounded-full overflow-hidden p-0.5 border border-neutral-800">
+                  <div className="bg-white h-full w-3/5 mx-auto rounded-full" />
                 </div>
-                <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+                <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
                   <span>-MAE ($69k)</span>
                   <span>Target Point</span>
                   <span>+MAE ($69k)</span>
@@ -616,39 +613,39 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               {/* Institutional Investment Projections */}
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3.5 rounded-xl bg-slate-900/50 border border-slate-850 space-y-1">
-                  <span className="text-[10px] text-slate-400 uppercase font-bold">Est. Monthly Market Rent</span>
-                  <p className="text-base font-bold text-white font-mono">{formatCurrency(estimatedRent)}/mo</p>
-                  <p className="text-[10px] text-emerald-400 font-mono">{capRate}% Gross Cap Rate</p>
+              <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+                <div className="p-3.5 rounded-xl bg-neutral-950 border border-neutral-850 space-y-1">
+                  <span className="text-[10px] text-neutral-400 uppercase font-bold">Est. Monthly Market Rent</span>
+                  <p className="text-base font-bold text-white">{formatCurrency(estimatedRent)}/mo</p>
+                  <p className="text-[10px] text-emerald-400">{capRate}% Gross Cap Rate</p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-900/50 border border-slate-850 space-y-1">
-                  <span className="text-[10px] text-slate-400 uppercase font-bold">Est. Total Monthly Holding</span>
-                  <p className="text-base font-bold text-white font-mono">{formatCurrency(totalMonthlyHolding)}/mo</p>
-                  <p className="text-[10px] text-slate-400 font-mono">P&I (6.5%) + Tax + Ins</p>
+                <div className="p-3.5 rounded-xl bg-neutral-950 border border-neutral-850 space-y-1">
+                  <span className="text-[10px] text-neutral-400 uppercase font-bold">Est. Total Monthly Holding</span>
+                  <p className="text-base font-bold text-white">{formatCurrency(totalMonthlyHolding)}/mo</p>
+                  <p className="text-[10px] text-neutral-400">P&I (6.5%) + Tax + Ins</p>
                 </div>
               </div>
 
               {/* Value Factor Decomposition */}
               <div className="space-y-2.5">
-                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-neutral-300 uppercase tracking-wider">
                   Deterministic Feature Impact Decomposition
                 </h4>
                 <div className="space-y-2">
                   {result.feature_factors.map((factor, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-slate-900/40 border border-slate-800 text-xs flex items-center justify-between"
+                      className="p-3 rounded-xl bg-neutral-950 border border-neutral-850 text-xs flex items-center justify-between"
                     >
-                      <span className="text-slate-300 font-medium">{factor.label}</span>
+                      <span className="text-neutral-300 font-medium">{factor.label}</span>
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
                           factor.impact === "positive"
-                            ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                            ? "bg-emerald-950/40 text-emerald-400 border border-emerald-500/30"
                             : factor.impact === "negative"
-                            ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
-                            : "bg-slate-800 text-slate-400"
+                            ? "bg-rose-950/40 text-rose-400 border border-rose-500/30"
+                            : "bg-neutral-900 text-neutral-400"
                         }`}
                       >
                         {factor.impact.toUpperCase()} IMPACT
@@ -659,37 +656,37 @@ export const PredictorTab: React.FC<PredictorTabProps> = ({ prefilledProperty })
               </div>
 
               {/* Action Toolbar & Audit Footer */}
-              <div className="pt-3 border-t border-slate-850 flex items-center justify-between">
-                <div className="text-[10px] text-slate-500 font-mono">
+              <div className="pt-3 border-t border-neutral-850 flex items-center justify-between">
+                <div className="text-[10px] text-neutral-500 font-mono">
                   <span>ID: {result.prediction_id.slice(0, 10)}...</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-850 text-slate-300 border border-slate-800 text-xs font-semibold transition-all"
+                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-850 text-white border border-neutral-800 text-xs font-semibold transition-all"
                 >
-                  <Printer className="w-3.5 h-3.5 text-slate-400" />
+                  <Printer className="w-3.5 h-3.5 text-neutral-400" />
                   <span>Print Appraisal Memo</span>
                 </button>
               </div>
             </div>
           ) : (
-            <div className="glass-panel p-8 rounded-2xl border border-slate-800 text-center space-y-4 shadow-terminal">
-              <div className="w-14 h-14 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto">
+            <div className="glass-panel p-8 rounded-2xl border border-neutral-850 text-center space-y-4 shadow-terminal">
+              <div className="w-14 h-14 rounded-2xl bg-neutral-900 border border-neutral-800 text-white flex items-center justify-center mx-auto">
                 <Sparkles className="w-7 h-7" />
               </div>
               <div className="space-y-1.5">
                 <h4 className="text-base font-bold text-white">Valuation Engine Standing By</h4>
-                <p className="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
-                  Select a benchmark preset above or enter customized physical characteristics to execute real-time valuation inference.
+                <p className="text-xs text-neutral-400 max-w-sm mx-auto leading-relaxed">
+                  Select a benchmark archetype above or enter customized physical characteristics to execute real-time valuation inference.
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] text-slate-400 text-left space-y-1.5">
-                <p className="font-semibold text-slate-200 flex items-center space-x-1.5">
+              <div className="p-4 rounded-xl bg-neutral-950 border border-neutral-850 text-[11px] text-neutral-400 text-left space-y-1.5">
+                <p className="font-semibold text-white flex items-center space-x-1.5">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
                   <span>Zero-Synthetic Valuation Pipeline</span>
                 </p>
-                <p className="text-slate-400 leading-snug">
+                <p className="text-neutral-400 leading-snug">
                   Predictions are calculated by the serialized Scikit-learn HistGradientBoosting model trained on 17,290 King County transactions and validated on 4,323 holdout deeds (R² 0.88).
                 </p>
               </div>

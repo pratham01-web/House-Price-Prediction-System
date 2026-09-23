@@ -9,6 +9,7 @@ import { ExplorerTab } from "../components/ExplorerTab";
 import { PredictorTab } from "../components/PredictorTab";
 import { AnalyticsTab } from "../components/AnalyticsTab";
 import { HistoryTab } from "../components/HistoryTab";
+import { BeamsBackground } from "../components/effects/BeamsBackground";
 import { api } from "../lib/api";
 import { MarketSummary, ModelVersion, Property } from "../types/api";
 import {
@@ -68,38 +69,48 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
-      {/* Desktop Persistent Sidebar */}
-      <Sidebar
-        activeTab={activeTab}
-        setActiveTab={(tab) => {
-          setActiveTab(tab);
-          setMobileMenuOpen(false);
-        }}
-        systemHealthy={systemHealthy}
-        activeModelVersion={activeModel?.version || "v1.0.0"}
+    <div className="min-h-screen flex bg-black text-white selection:bg-neutral-800 selection:text-white relative">
+      {/* React Bits Ambient Three.js Beams Background Canvas */}
+      <BeamsBackground
+        lightColor="#ffffff"
+        speed={1.2}
+        noiseIntensity={1.5}
+        beamNumber={12}
       />
+
+      {/* Desktop Persistent Sidebar */}
+      <div className="relative z-20 flex-shrink-0">
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={(tab) => {
+            setActiveTab(tab);
+            setMobileMenuOpen(false);
+          }}
+          systemHealthy={systemHealthy}
+          activeModelVersion={activeModel?.version || "v1.0.0"}
+        />
+      </div>
 
       {/* Mobile Slide-over Navigation Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <div
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/85 backdrop-blur-md"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="relative flex flex-col w-72 max-w-xs bg-slate-950 border-r border-slate-850 p-6 z-10 space-y-6">
+          <div className="relative flex flex-col w-72 max-w-xs bg-black border-r border-neutral-800 p-6 z-10 space-y-6">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white">
+              <div className="flex items-center space-x-2.5">
+                <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-black">
                   <Building2 className="w-4 h-4" />
                 </div>
                 <span className="font-extrabold text-sm text-white tracking-tight">
-                  RealEstate<span className="text-indigo-400">IQ</span>
+                  RealEstate<span className="text-neutral-400">IQ</span>
                 </span>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900"
+                className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -118,26 +129,26 @@ export default function Home() {
                     }}
                     className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
                       isActive
-                        ? "bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-semibold"
-                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/60"
+                        ? "bg-white/10 text-white border border-white/20 font-semibold"
+                        : "text-neutral-400 hover:text-white hover:bg-neutral-900"
                     }`}
                   >
-                    <Icon className={`w-4 h-4 ${isActive ? "text-indigo-400" : "text-slate-400"}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-neutral-400"}`} />
                     <span>{item.label}</span>
                   </button>
                 );
               })}
             </nav>
 
-            <div className="pt-4 border-t border-slate-900 text-[11px] font-mono text-slate-500">
-              King County 21,613 Validated Sales
+            <div className="pt-4 border-t border-neutral-900 text-[11px] font-mono text-neutral-500">
+              King County 21,613 Validated Deeds
             </div>
           </div>
         </div>
       )}
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 relative z-10">
         <Header
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -169,23 +180,23 @@ export default function Home() {
           {activeTab === "history" && <HistoryTab />}
         </main>
 
-        {/* Institutional Real Estate Footer */}
-        <footer className="border-t border-slate-900 bg-slate-950/60 py-6 mt-12 text-xs text-slate-500">
+        {/* Institutional Minimalist Pure Black Footer */}
+        <footer className="border-t border-neutral-850 bg-black/80 backdrop-blur-xl py-6 mt-12 text-xs text-neutral-500">
           <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
-              <p className="font-semibold text-slate-300">
+              <p className="font-semibold text-neutral-300">
                 House Price Intelligence & Prediction Platform
               </p>
-              <p className="text-[11px] text-slate-500 font-mono">
-                King County Department of Assessments · OpenML Dataset 42092 · 21,613 Verified Transaction Deeds
+              <p className="text-[11px] text-neutral-500 font-mono">
+                King County Department of Assessments · OpenML 42092 · 21,613 Verified Transaction Deeds
               </p>
             </div>
-            <div className="flex items-center space-x-4 text-[11px] font-mono">
-              <span className="text-emerald-400">FastAPI 0.111+</span>
+            <div className="flex items-center space-x-4 text-[11px] font-mono text-neutral-400">
+              <span>FastAPI 0.111+</span>
               <span>•</span>
-              <span className="text-indigo-400">PostgreSQL 16 (Port 5432)</span>
+              <span>PostgreSQL 16</span>
               <span>•</span>
-              <span className="text-cyan-400">HistGradientBoosting (R² 0.88)</span>
+              <span className="text-white font-semibold">HistGradientBoosting (R² 0.88)</span>
               <span>•</span>
               <span>Next.js 14 App Router</span>
             </div>

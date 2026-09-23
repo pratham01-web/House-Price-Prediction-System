@@ -21,14 +21,14 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   return (
     <div
       className={cn(
-        "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-5",
+        "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-neutral-800 pb-5",
         className
       )}
     >
       <div className="space-y-1">
         <div className="flex items-center space-x-2.5">
           {Icon && (
-            <div className="p-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+            <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
               <Icon className="w-4 h-4" />
             </div>
           )}
@@ -36,13 +36,13 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
             {title}
           </h2>
           {badge && (
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-neutral-900 text-neutral-300 border border-neutral-700">
               {badge}
             </span>
           )}
         </div>
         {subtitle && (
-          <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-neutral-400 max-w-2xl leading-relaxed">
             {subtitle}
           </p>
         )}

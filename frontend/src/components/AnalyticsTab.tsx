@@ -42,8 +42,8 @@ export const AnalyticsTab: React.FC = () => {
   if (loading) {
     return (
       <div className="py-24 text-center space-y-3">
-        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-xs text-slate-400 font-mono">Aggregating 21,613 PostgreSQL records...</p>
+        <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-xs text-neutral-400 font-mono">Aggregating 21,613 PostgreSQL records...</p>
       </div>
     );
   }
@@ -58,33 +58,33 @@ export const AnalyticsTab: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
           { label: "County Median", value: "$450,000", sub: "50th Percentile", color: "text-white" },
-          { label: "Interquartile Range (IQR)", value: "$322k – $645k", sub: "25th to 75th Percentile", color: "text-indigo-400" },
+          { label: "Interquartile Range (IQR)", value: "$322k – $645k", sub: "25th to 75th Percentile", color: "text-neutral-300" },
           { label: "Peak Recorded Deed", value: "$7,700,000", sub: "Medina Waterfront (98039)", color: "text-emerald-400" },
-          { label: "Floor Recorded Deed", value: "$75,000", sub: "Rural South County (98022)", color: "text-cyan-400" },
+          { label: "Floor Recorded Deed", value: "$75,000", sub: "Rural South County (98022)", color: "text-neutral-400" },
         ].map((item, idx) => (
-          <div key={idx} className="glass-panel p-4 rounded-xl border border-slate-800 space-y-1">
-            <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider font-mono">{item.label}</span>
+          <div key={idx} className="glass-panel p-4 rounded-xl border border-neutral-800 space-y-1 bg-neutral-950/70">
+            <span className="text-[10px] uppercase font-bold text-neutral-400 tracking-wider font-mono">{item.label}</span>
             <p className={`text-xl font-bold font-mono tracking-tight ${item.color}`}>{item.value}</p>
-            <p className="text-[10px] text-slate-500 font-mono">{item.sub}</p>
+            <p className="text-[10px] text-neutral-500 font-mono">{item.sub}</p>
           </div>
         ))}
       </div>
 
       {/* 2. Price Distribution Histogram */}
-      <div className="glass-panel p-6 sm:p-7 rounded-2xl border border-slate-800 space-y-4 shadow-terminal">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
+      <div className="glass-panel p-6 sm:p-7 rounded-2xl border border-neutral-800 space-y-4 bg-neutral-950/80 shadow-2xl">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
           <div>
             <div className="flex items-center space-x-2">
-              <BarChart3 className="w-5 h-5 text-indigo-400" />
+              <BarChart3 className="w-5 h-5 text-white" />
               <h3 className="text-base font-bold text-white tracking-tight">
                 Authentic Closing Price Distribution (21,613 Deeds)
               </h3>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-neutral-400 mt-0.5">
               Empirical density across single-family residential transactions in King County ($100k to $1.6M+)
             </p>
           </div>
-          <span className="px-3 py-1 text-xs font-mono rounded-lg bg-slate-900 border border-slate-800 text-indigo-300 font-semibold">
+          <span className="px-3 py-1 text-xs font-mono rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300 font-semibold">
             Skewness: 4.02 · Right-Skewed Log-Normal
           </span>
         </div>
@@ -93,28 +93,28 @@ export const AnalyticsTab: React.FC = () => {
           {distData && (
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={distData.bins} margin={{ top: 10, right: 10, left: 10, bottom: 25 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#262626" vertical={false} />
                 <XAxis
                   dataKey="bin_range"
-                  stroke="#64748b"
+                  stroke="#737373"
                   fontSize={10}
                   tickLine={false}
                   interval={0}
                   angle={-25}
                   textAnchor="end"
                 />
-                <YAxis stroke="#64748b" fontSize={11} tickLine={false} />
+                <YAxis stroke="#737373" fontSize={11} tickLine={false} />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className="bg-slate-900/95 border border-slate-700 p-3 rounded-xl shadow-2xl text-xs space-y-1">
+                        <div className="bg-black/95 border border-neutral-700 p-3 rounded-xl shadow-2xl text-xs space-y-1">
                           <p className="font-bold text-white font-mono">{data.bin_range}</p>
-                          <p className="text-indigo-400 font-mono font-semibold">
+                          <p className="text-neutral-200 font-mono font-semibold">
                             {formatNumber(data.count)} Recorded Sales
                           </p>
-                          <p className="text-[10px] text-slate-400">
+                          <p className="text-[10px] text-neutral-400">
                             {((data.count / 21613) * 100).toFixed(1)}% of total county volume
                           </p>
                         </div>
@@ -123,7 +123,7 @@ export const AnalyticsTab: React.FC = () => {
                     return null;
                   }}
                 />
-                <Bar dataKey="count" fill="#6366f1" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="count" fill="#d4d4d8" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -131,15 +131,15 @@ export const AnalyticsTab: React.FC = () => {
       </div>
 
       {/* 3. Feature Correlation Ranking */}
-      <div className="glass-panel p-6 sm:p-7 rounded-2xl border border-slate-800 space-y-4 shadow-terminal">
-        <div className="border-b border-slate-800 pb-4">
+      <div className="glass-panel p-6 sm:p-7 rounded-2xl border border-neutral-800 space-y-4 bg-neutral-950/80 shadow-2xl">
+        <div className="border-b border-neutral-800 pb-4">
           <div className="flex items-center space-x-2">
             <TrendingUp className="w-5 h-5 text-emerald-400" />
             <h3 className="text-base font-bold text-white tracking-tight">
               Empirical Value Determinants (Pearson Correlation with Price)
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-neutral-400 mt-0.5">
             Physical square footage (+0.70) and county construction grade (+0.67) govern primary price formation
           </p>
         </div>
@@ -150,16 +150,16 @@ export const AnalyticsTab: React.FC = () => {
             return (
               <div key={idx} className="space-y-1 text-xs">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-slate-200">
-                    {item.feature} <span className="text-slate-400 font-normal">({item.description})</span>
+                  <span className="font-semibold text-neutral-200">
+                    {item.feature} <span className="text-neutral-400 font-normal">({item.description})</span>
                   </span>
                   <span className="font-mono font-bold text-emerald-400">
                     +{item.correlation.toFixed(4)}
                   </span>
                 </div>
-                <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-800 p-0.5">
+                <div className="w-full bg-neutral-900 h-2.5 rounded-full overflow-hidden border border-neutral-800 p-0.5">
                   <div
-                    className="h-full bg-gradient-to-r from-indigo-500 via-teal-400 to-emerald-400 rounded-full"
+                    className="h-full bg-gradient-to-r from-neutral-500 via-neutral-300 to-emerald-400 rounded-full"
                     style={{ width: `${widthPct}%` }}
                   />
                 </div>
@@ -172,31 +172,31 @@ export const AnalyticsTab: React.FC = () => {
       {/* 4. Geographic Price Extremes (Zip Codes) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Expensive Zips */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 shadow-terminal">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="glass-panel p-6 rounded-2xl border border-neutral-800 space-y-4 bg-neutral-950/80 shadow-2xl">
+          <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
             <div className="flex items-center space-x-2">
-              <MapPin className="w-4 h-4 text-amber-400" />
+              <MapPin className="w-4 h-4 text-emerald-400" />
               <h4 className="text-sm font-bold text-white uppercase tracking-wider">
                 Top 8 Premium Sub-Markets (Highest Median)
               </h4>
             </div>
-            <span className="text-[10px] font-mono text-slate-400">Eastside Luxury Corridor</span>
+            <span className="text-[10px] font-mono text-neutral-400">Eastside Luxury Corridor</span>
           </div>
           <div className="space-y-2">
             {topExpensive.map((loc) => (
               <div
                 key={loc.zipcode}
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs"
+                className="flex items-center justify-between p-3 rounded-xl bg-neutral-900/60 border border-neutral-800 text-xs"
               >
                 <div>
                   <span className="font-mono font-bold text-white text-sm">ZIP {loc.zipcode}</span>
-                  <p className="text-[11px] text-slate-400 font-mono">{loc.property_count} verified deeds</p>
+                  <p className="text-[11px] text-neutral-400 font-mono">{loc.property_count} verified deeds</p>
                 </div>
                 <div className="text-right font-mono">
                   <span className="font-bold text-emerald-400 text-sm">
                     {formatCurrency(loc.avg_price)}
                   </span>
-                  <p className="text-[11px] text-slate-300">${loc.avg_price_per_sqft}/SF</p>
+                  <p className="text-[11px] text-neutral-400">${loc.avg_price_per_sqft}/SF</p>
                 </div>
               </div>
             ))}
@@ -204,31 +204,31 @@ export const AnalyticsTab: React.FC = () => {
         </div>
 
         {/* Affordable Zips */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 shadow-terminal">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="glass-panel p-6 rounded-2xl border border-neutral-800 space-y-4 bg-neutral-950/80 shadow-2xl">
+          <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
             <div className="flex items-center space-x-2">
-              <MapPin className="w-4 h-4 text-cyan-400" />
+              <MapPin className="w-4 h-4 text-neutral-300" />
               <h4 className="text-sm font-bold text-white uppercase tracking-wider">
                 Top 8 High-Affordability Sub-Markets
               </h4>
             </div>
-            <span className="text-[10px] font-mono text-slate-400">South County Accessible</span>
+            <span className="text-[10px] font-mono text-neutral-400">South County Accessible</span>
           </div>
           <div className="space-y-2">
             {topAffordable.map((loc) => (
               <div
                 key={loc.zipcode}
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs"
+                className="flex items-center justify-between p-3 rounded-xl bg-neutral-900/60 border border-neutral-800 text-xs"
               >
                 <div>
                   <span className="font-mono font-bold text-white text-sm">ZIP {loc.zipcode}</span>
-                  <p className="text-[11px] text-slate-400 font-mono">{loc.property_count} verified deeds</p>
+                  <p className="text-[11px] text-neutral-400 font-mono">{loc.property_count} verified deeds</p>
                 </div>
                 <div className="text-right font-mono">
-                  <span className="font-bold text-cyan-400 text-sm">
+                  <span className="font-bold text-neutral-200 text-sm">
                     {formatCurrency(loc.avg_price)}
                   </span>
-                  <p className="text-[11px] text-slate-300">${loc.avg_price_per_sqft}/SF</p>
+                  <p className="text-[11px] text-neutral-400">${loc.avg_price_per_sqft}/SF</p>
                 </div>
               </div>
             ))}

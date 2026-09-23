@@ -22,12 +22,12 @@ export const GlassCard: React.FC<GlassCardProps> = ({
 
   const variantStyles = {
     default:
-      "bg-slate-900/70 backdrop-blur-xl border border-slate-800/80 shadow-glass rounded-2xl",
+      "bg-neutral-950/80 backdrop-blur-xl border border-neutral-800/80 shadow-2xl rounded-2xl",
     interactive:
-      "bg-slate-900/70 backdrop-blur-xl border border-slate-800/80 shadow-glass rounded-2xl transition-all duration-200 hover:bg-slate-850/80 hover:border-indigo-500/30 hover:shadow-glow cursor-pointer",
-    flat: "bg-slate-900/50 border border-slate-800/60 rounded-xl",
+      "bg-neutral-950/80 backdrop-blur-xl border border-neutral-800/80 shadow-2xl rounded-2xl transition-all duration-200 hover:bg-neutral-900/80 hover:border-neutral-600 cursor-pointer",
+    flat: "bg-neutral-950/60 border border-neutral-800/60 rounded-xl",
     elevated:
-      "bg-slate-900/90 backdrop-blur-2xl border border-slate-700/80 shadow-2xl rounded-2xl",
+      "bg-black/95 backdrop-blur-2xl border border-neutral-700 shadow-2xl rounded-2xl",
   };
 
   return (
